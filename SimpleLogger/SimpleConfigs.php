@@ -6,7 +6,7 @@
 
 namespace SimpleLogger;
 
-interface SimpleConfigs{
+interface SimpleConfigs {
 	
 	/**
 	 *  Log folder name
@@ -20,7 +20,7 @@ interface SimpleConfigs{
 	
 	/**
 	 *  Date format of the log file name
-	 *  @important this will be part of the file name, take care of the "/" and "."
+	 * @important this will be part of the file name, take care of the "/" and "."
 	 */
 	const LOG_FILE_DATE_FORMAT = "Y_m_d";
 	

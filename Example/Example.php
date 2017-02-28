@@ -15,19 +15,19 @@ class Example {
 		$this->_log = Simple::logger();
 	}
 	
-	public function firstExampleMethod(){
-		$this->_log->info("Message from first method",array("dummy"=>"params"),__FILE__,__METHOD__);
+	public function firstExampleMethod() {
+		$this->_log->info( "Message from first method" , array ( "dummy" => "params" ) , __FILE__ , __METHOD__ );
 	}
 	
-	public function secondExampleMethod(){
-		$this->_log->error("Message from second method",array("dummy"=>"params"),__FILE__,__METHOD__);
+	public function secondExampleMethod() {
+		$this->_log->error( "Message from second method" , array ( "dummy" => "params" ) , __FILE__ , __METHOD__ );
 	}
 	
-	public function thirdExampleMethod(){
-		$this->_log->warning("Message from third method",array("dummy"=>"params"),__FILE__,__METHOD__);
+	public function thirdExampleMethod() {
+		$this->_log->warning( "Message from third method" , array ( "dummy" => "params" ) , __FILE__ , __METHOD__ );
 	}
 	
-	public function fourthExampleMethod(){
-		$this->_log->exception("Message from fourth method",array("dummy"=>"params"),__FILE__,__METHOD__);
+	public function fourthExampleMethod() {
+		$this->_log->exception( "Message from fourth method" , array ( "dummy" => "params" ) , __FILE__ , __METHOD__ );
 	}
 }

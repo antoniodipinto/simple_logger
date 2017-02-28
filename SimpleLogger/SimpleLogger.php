@@ -193,19 +193,19 @@ class Simple {
 				
 				try {
 					
-					$log = "\t\t======================= START ======================= \n\n";
+					$log = "\t======================= START ======================= \n\n";
 					
-					$log .= "\t\t\tType: " . $data[ 'type' ] . "\n";
-					$log .= "\t\t\tTime: " . $data[ 'time' ] . "\n";
-					$log .= "\t\t\tFile: " . $data[ 'filename' ] . "\n";
-					$log .= "\t\t\tMethod: " . $data[ 'method' ] . "\n";
-					$log .= "\t\t\tMessage: " . $data[ 'message' ] . "\n";
+					$log .= "\t\tType: " . $data[ 'type' ] . "\n";
+					$log .= "\t\tTime: " . $data[ 'time' ] . "\n";
+					$log .= "\t\tFile: " . $data[ 'filename' ] . "\n";
+					$log .= "\t\tMethod: " . $data[ 'method' ] . "\n";
+					$log .= "\t\tMessage: " . $data[ 'message' ] . "\n";
 					
 					if ( null != $data[ 'params' ] ) {
-						$log .= "\t\t\tParams: " . $data[ 'params' ] . "\n";
+						$log .= "\t\tParams: " . $data[ 'params' ] . "\n";
 					}
 					
-					$log .= "\n\t\t======================= END ======================= \n";
+					$log .= "\n\t======================= END ======================= \n";
 					
 					file_put_contents( $this->_log_file , $log , FILE_APPEND );
 					

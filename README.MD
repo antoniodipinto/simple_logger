@@ -6,7 +6,7 @@ Using this class it is possible to create a simple log file or log (info, warnin
 
 ## Features
 
-* Log instant and print a JSON string (Debug mod enabled)
+* Log instant and print a JSON string (Debug mode enabled)
 * Store Logs in custom folder and files
 * Divide logs for datetime format, you can create a log file everyday or every second, all organized by time format
 
