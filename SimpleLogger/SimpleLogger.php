@@ -179,7 +179,7 @@ class Simple {
 			$this->exception( __FILE__ , __METHOD__ , $e );
 		}
 	}
-	
+	 
 	/**
 	 * Store the log in files
 	 *
