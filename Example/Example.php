@@ -20,6 +20,11 @@ class Example {
 	}
 	
 	public function secondExampleMethod() {
+		
+		//PHP Error trigger
+		trigger_error("Dummy Error");
+		
+		//SimpleLogger error trigger
 		$this->_log->error( "Message from second method" , array ( "dummy" => "params" ) , __FILE__ , __METHOD__ );
 	}
 	
@@ -28,6 +33,15 @@ class Example {
 	}
 	
 	public function fourthExampleMethod() {
-		$this->_log->exception( "Message from fourth method" , array ( "dummy" => "params" ) , __FILE__ , __METHOD__ );
+		
+		//Real use exception with try/catch
+		try {
+			throw new Exception( "Dummy Exception" );
+		} catch ( Exception $exception ) {
+			$this->_log->exception( $exception , __METHOD__ );
+		}
+		
+		//Artificial exception
+		throw new Exception( "Artificial Exception" );
 	}
 }

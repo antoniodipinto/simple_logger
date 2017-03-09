@@ -105,8 +105,12 @@ In [SimpleConfigs.php] you can edit the following variables:
     //Warning log with custom message, optional array parameter and the file where the log function is called and the optional method
     $log->warning( "Warning Message" , array ( "key" => "value" ) , __FILE__ , __METHOD__ );
     
-    //Exception log with custom message, optional string parameter
-    $log->exception( "Exception Message" , "Optional string param" );
+    //Exception log based on standard exception class
+    try {
+    	throw new Exception( "Dummy Exception" );
+    } catch ( Exception $exception ) {
+    	$log->exception( $exception , __METHOD__ );
+    }
     
     //Returns the instance log array
     $log->getLog();

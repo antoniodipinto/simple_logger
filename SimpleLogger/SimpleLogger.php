@@ -8,9 +8,12 @@
 namespace SimpleLogger;
 
 /**
+ *
  * Class Simple
  * @package SimpleLogger
  * @author Antonio Di Pinto <a.dipinto@codeincode.it>
+ * @url https://github.com/antoniodipinto/simple_logger
+ *
  */
 class Simple {
 	
@@ -45,7 +48,10 @@ class Simple {
 	 * Simple constructor.
 	 */
 	private function __construct() {
+		set_exception_handler( array ( $this , "exception" ) );
+		set_error_handler( array ( $this , "simple_error_handler" ) );
 		date_default_timezone_set( SimpleConfigs::LOG_TIMEZONE );
+		
 		$this->_prepare();
 	}
 	
@@ -80,19 +86,6 @@ class Simple {
 	
 	
 	/**
-	 * Method for EXCEPTION log type
-	 *
-	 * @param string|array $message Message to show in log
-	 * @param null|string|array $params Optional parameters or additional data to show in log
-	 * @param null|string $file Default PHP __FILE__ to show the path of the file that request the log
-	 * @param null|string $method Default PHP __METHOD__ to show the method that request the log
-	 */
-	public function exception( $message , $params = null , $file = null , $method = null ) {
-		$this->_setLog( SimpleConfigs::LOG_TYPE_EXCEPTION , $message , $params , $file , $method );
-	}
-	
-	
-	/**
 	 * Method for ERROR log type
 	 *
 	 * @param string|array $message Message to show in log
@@ -106,12 +99,33 @@ class Simple {
 	
 	
 	/**
+	 * Method for EXCEPTION log type
+	 *
+	 * @param \Exception $exception Exception object
+	 * @param null|string $method Default PHP __METHOD__ to show the method that request the log
+	 */
+	public function exception( \Exception $exception , $method = null ) {
+		$this->_setLog( SimpleConfigs::LOG_TYPE_EXCEPTION , $exception->getMessage() , $exception->getTrace() , '[Line: ' . $exception->getLine() . '] ' . $exception->getFile() , $method );
+	}
+	
+	
+	/**
 	 * Returns all the log registered until that call
 	 *
 	 * @return array $_log
 	 */
 	public function getLog() {
 		return $this->_log;
+	}
+	
+	/**
+	 * @param null $error_number Error type number E_ERROR, E_USER_NOTICE etc..
+	 * @param mixed $error_message Error message
+	 * @param string $error_file Error file path
+	 * @param string $error_line Error file line
+	 */
+	public function simple_error_handler( $error_number = null , $error_message , $error_file , $error_line ) {
+		$this->_setLog( SimpleConfigs::LOG_TYPE_ERROR , '[' . $this->_getErrorType($error_number) . '] ' . $error_message , null , '[Line: ' . $error_line . '] ' . $error_file , null );
 	}
 	
 	// -------------------------------
@@ -151,7 +165,7 @@ class Simple {
 			$this->_log_file = $log_file;
 		} catch ( \Exception $e ) {
 			$this->_log_file = null;
-			$this->exception( __FILE__ , __METHOD__ , "Cannot create log file" , $e );
+			$this->exception( $e , __METHOD__ );
 		}
 	}
 	
@@ -171,15 +185,14 @@ class Simple {
 		try {
 			
 			$data = $this->_formatLog( $type , $message , $params , $file , $method );
-			
 			$this->_writeLog( $data );
 			$this->_debugLog( $type , $message , $params , $file , $method );
 			
 		} catch ( \Exception $e ) {
-			$this->exception( __FILE__ , __METHOD__ , $e );
+			$this->exception( $e , __METHOD__ );
 		}
 	}
-	 
+	
 	/**
 	 * Store the log in files
 	 *
@@ -212,7 +225,7 @@ class Simple {
 				} catch ( \Exception $e ) {
 					
 					//You can see this exception enabling "DEBUG MODE"
-					$this->exception( __FILE__ , __METHOD__ , "Cannot write log file" , $e );
+					$this->exception( $e , __METHOD__ );
 				}
 			}
 		}
@@ -299,6 +312,51 @@ class Simple {
 		if ( SimpleConfigs::LOG_IS_DEBUG ) {
 			echo json_encode( $log , JSON_PRETTY_PRINT );
 		}
+	}
+	
+	
+	/**
+	 * @param int|string $type Error code
+	 * @url http://php.net/manual/en/errorfunc.constants.php#109430
+	 *
+	 * @return string Formatted error type
+	 */
+	private function _getErrorType( $type ) {
+		
+		switch ( $type ) {
+			case E_ERROR: // 1 //
+				return 'E_ERROR';
+			case E_WARNING: // 2 //
+				return 'E_WARNING';
+			case E_PARSE: // 4 //
+				return 'E_PARSE';
+			case E_NOTICE: // 8 //
+				return 'E_NOTICE';
+			case E_CORE_ERROR: // 16 //
+				return 'E_CORE_ERROR';
+			case E_CORE_WARNING: // 32 //
+				return 'E_CORE_WARNING';
+			case E_COMPILE_ERROR: // 64 //
+				return 'E_COMPILE_ERROR';
+			case E_COMPILE_WARNING: // 128 //
+				return 'E_COMPILE_WARNING';
+			case E_USER_ERROR: // 256 //
+				return 'E_USER_ERROR';
+			case E_USER_WARNING: // 512 //
+				return 'E_USER_WARNING';
+			case E_USER_NOTICE: // 1024 //
+				return 'E_USER_NOTICE';
+			case E_STRICT: // 2048 //
+				return 'E_STRICT';
+			case E_RECOVERABLE_ERROR: // 4096 //
+				return 'E_RECOVERABLE_ERROR';
+			case E_DEPRECATED: // 8192 //
+				return 'E_DEPRECATED';
+			case E_USER_DEPRECATED: // 16384 //
+				return 'E_USER_DEPRECATED';
+		}
+		
+		return "";
 	}
 	
 	// -------------------------------
