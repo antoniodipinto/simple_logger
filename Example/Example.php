@@ -3,7 +3,8 @@
  * Project Name: simple_logger
  * File Name: example.php
  */
-require_once "../SimpleLogger/SimpleLoader.php";
+require_once "../src/SimpleLogger/SimpleConfigs.php";
+require_once "../src/SimpleLogger/SimpleLogger.php";
 
 use SimpleLogger\Simple as Simple;
 
