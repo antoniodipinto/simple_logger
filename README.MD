@@ -13,17 +13,18 @@ Using this class it is possible to create a simple log file or log (info, warnin
 ## Installation
 
 In order to use SimpleLogger you just need to download the repository, put into the root of you project then:
-
+```php
     <?php
      
     require_once "SimpleLogger/SimpleLoader.php";
     
     use SimpleLogger\Simple as Simple;
-    
+```
     
 ## Customization
 In [SimpleConfigs.php] you can edit the following variables:
         
+   ```php
         <?php
 
          /**
@@ -88,10 +89,10 @@ In [SimpleConfigs.php] you can edit the following variables:
        	 *  String to define log type EXCEPTION
        	 */
        	const LOG_TYPE_EXCEPTION = "EXCEPTION";
-
+   ```
 
 ## Basic Usage
-
+```php
     <?php
     
     $log = Simple::logger();
@@ -114,6 +115,8 @@ In [SimpleConfigs.php] you can edit the following variables:
     
     //Returns the instance log array
     $log->getLog();
+    
+  ```
     
     
 ## Result
