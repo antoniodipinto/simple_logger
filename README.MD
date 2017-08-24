@@ -122,7 +122,7 @@ In [SimpleConfigs.php] you can edit the following variables:
 ## Result
 
 If you enable debug mode you can see an instant JSON log printed on screen like this
-
+```json
                                 {
                                     "time": "2017\/02\/23 14:46:43",
                                     "type": "ERROR",
@@ -133,6 +133,8 @@ If you enable debug mode you can see an instant JSON log printed on screen like 
                                         "optional_params": "value"
                                     }
                                 }
+                                
+```
 
 You can also see the log in the **"simple_log"** folder created automatically and will be like this:
 
